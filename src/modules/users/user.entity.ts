@@ -1,4 +1,4 @@
-export class UsersEntity {
+export class UserEntity {
   id: string;
   name: string;
   email: string;
@@ -6,4 +6,4 @@ export class UsersEntity {
   active: boolean;
 }
 
-export default UsersEntity;
+export default UserEntity;
