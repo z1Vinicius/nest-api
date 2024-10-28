@@ -5,6 +5,7 @@ import {
   IsString,
   IsStrongPassword,
 } from 'class-validator';
+import UniqueEmail from '../decorators/unique-email.decorator';
 
 Injectable();
 class CreateUserDTO {
@@ -14,6 +15,7 @@ class CreateUserDTO {
 
   @IsEmail({}, { message: 'O e-mail informado é inválido' })
   @IsNotEmpty({ message: 'É necessário passar um e-mail' })
+  @UniqueEmail({ message: 'E-mail já cadastrado' })
   email: string;
 
   @IsStrongPassword(
