@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import ProductEntity from './product.entity';
 
 @Entity({ name: 'TB_PRODUCT_IMAGES', schema: process.env.DATABASE_SCHEMA })
 class ProductImageEntity {
@@ -10,6 +11,9 @@ class ProductImageEntity {
 
   @Column({ name: 'DE_PRODUCT_IMAGE' })
   description: string;
+
+  @ManyToOne(() => ProductEntity, (product) => product.images)
+  product: ProductEntity;
 }
 
 export default ProductImageEntity;

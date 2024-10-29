@@ -3,10 +3,8 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
-  JoinColumn,
-  JoinTable,
-  ManyToMany,
-  OneToOne,
+  ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -31,16 +29,13 @@ class ProductEntity {
   @Column({ name: 'ACTIVE', default: true })
   active: boolean;
 
-  @JoinColumn({ name: 'CD_PRODUCT_CATEGORY' })
-  @OneToOne(() => ProductCategoryEntity, { cascade: true, nullable: true, eager: true })
+  @ManyToOne(() => ProductCategoryEntity, { nullable: true, eager: true })
   category: ProductCategoryEntity;
 
-  @ManyToMany(() => ProductImageEntity, { eager: true })
-  @JoinTable()
+  @OneToMany(() => ProductImageEntity, (product) => product.product, { nullable: true, eager: true })
   images: ProductImageEntity[];
 
-  @ManyToMany(() => ProductDetailEntity, { eager: true })
-  @JoinTable()
+  @OneToMany(() => ProductDetailEntity, (product) => product.product, { nullable: true, eager: true })
   details: ProductDetailEntity[];
 
   @CreateDateColumn({ name: 'CREATED_AT' })
