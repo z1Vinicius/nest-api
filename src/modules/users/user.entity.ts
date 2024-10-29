@@ -1,6 +1,6 @@
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
-@Entity({ name: 'TB_USER', schema: process.env.DATABASE_SCHEMA })
+@Entity({ name: 'TB_USERS', schema: process.env.DATABASE_SCHEMA })
 class UserEntity {
   @PrimaryGeneratedColumn('uuid', { name: 'CD_USER' })
   id!: string;
