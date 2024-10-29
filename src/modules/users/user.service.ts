@@ -28,6 +28,14 @@ class UserService {
   async createUser(user: UserEntity): Promise<UserEntity> {
     return await this.userRepository.save(user);
   }
+
+  async delete(id: string) {
+    await this.userRepository.delete(id);
+  }
+
+  async updateUser(id: string, user: UserEntity) {
+    return await this.userRepository.update(id, user);
+  }
 }
 
 export default UserService;

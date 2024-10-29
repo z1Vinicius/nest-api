@@ -1,17 +1,13 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 import CreateUserDTO from './dto/create-user.dto';
 import ListUserDTO from './dto/list-user.dto';
 import UpdateUserDTO from './dto/update-user.dto';
 import UserEntity from './entities/user.entity';
-import UserRepository from './user.repository';
 import UserService from './user.service';
 
 @Controller('/users')
 class UserController {
-  constructor(
-    private userRepository: UserRepository,
-    private userService: UserService,
-  ) {}
+  constructor(private userService: UserService) {}
 
   @Get()
   async getUsers(): Promise<ListUserDTO[]> {
@@ -26,15 +22,16 @@ class UserController {
     return new ListUserDTO(createUser.id, createUser.name, createUser.email);
   }
 
-  @Patch('/:id')
+  @Put('/:id')
   async updateUser(@Body() userData: UpdateUserDTO, @Param('id') id: string) {
-    const updatedUser = await this.userRepository.updateUser(id, userData);
-    return new ListUserDTO(id, updatedUser.name, updatedUser.email);
+    const user = new UserEntity(userData.name, userData.email, userData.password, true);
+    await this.userService.updateUser(id, user);
+    return new ListUserDTO(id, user.name, user.email);
   }
 
   @Delete('/:id')
   async deleteUser(@Param('id') id: string) {
-    await this.userRepository.deleteUser(id);
+    await this.userService.delete(id);
     return { message: 'Usuário removido' };
   }
 }
