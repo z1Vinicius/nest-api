@@ -12,7 +12,10 @@ class ProductImageEntity {
   @Column({ name: 'DE_PRODUCT_IMAGE' })
   description: string;
 
-  @ManyToOne(() => ProductEntity, (product) => product.images)
+  @ManyToOne(() => ProductEntity, (product) => product.images, {
+    orphanedRowAction: 'delete',
+    onDelete: 'CASCADE',
+  })
   product: ProductEntity;
 }
 
