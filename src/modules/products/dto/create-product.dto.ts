@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { Transform, Type } from 'class-transformer';
-import { IsDate, IsNotEmpty, IsNumber, IsOptional, IsString, ValidateNested } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsNotEmpty, IsNumber, IsOptional, IsString, ValidateNested } from 'class-validator';
 
 class ProductDetailDTO {
   @IsString()
@@ -43,14 +43,6 @@ export class CreateProductDto {
   @IsString()
   @IsNotEmpty()
   category: string;
-
-  @Transform(({ value }) => value && new Date(value))
-  @IsDate()
-  createdAt: string;
-
-  @Transform(({ value }) => value && new Date(value))
-  @IsDate()
-  updatedAt: string;
 
   @IsOptional()
   @ValidateNested({ each: true })

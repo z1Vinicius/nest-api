@@ -4,7 +4,8 @@ import {
   DeleteDateColumn,
   Entity,
   JoinColumn,
-  OneToMany,
+  JoinTable,
+  ManyToMany,
   OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -34,11 +35,13 @@ class ProductEntity {
   @OneToOne(() => ProductCategoryEntity, { cascade: true, nullable: true, eager: true })
   category: ProductCategoryEntity;
 
-  @OneToMany(() => ProductImageEntity, null, { eager: true, nullable: true })
+  @ManyToMany(() => ProductImageEntity, { eager: true })
+  @JoinTable()
   images: ProductImageEntity[];
 
-  @OneToMany(() => ProductDetailEntity, null, { eager: true, nullable: true })
-  details: ProductImageEntity[];
+  @ManyToMany(() => ProductDetailEntity, { eager: true })
+  @JoinTable()
+  details: ProductDetailEntity[];
 
   @CreateDateColumn({ name: 'CREATED_AT' })
   createAt: Date;
