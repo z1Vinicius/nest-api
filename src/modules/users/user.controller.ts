@@ -15,13 +15,15 @@ class UserController {
   }
 
   @Post()
-  async createUser(@Body() userData: CreateUserDTO): Promise<ListUserDTO> {
-    return await this.userService.createUser(userData);
+  async createUser(@Body() userData: CreateUserDTO) {
+    const createUser = await this.userService.createUser(userData);
+    return new ListUserDTO(createUser.id, createUser.name, createUser.email);
   }
 
   @Put('/:id')
   async updateUser(@Body() userData: UpdateUserDTO, @Param('id') id: string) {
-    return this.userService.updateUser(id, userData);
+    await this.userService.updateUser(id, userData);
+    return new ListUserDTO(id, userData.name, userData.email);
   }
 
   @Delete('/:id')

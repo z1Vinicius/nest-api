@@ -27,20 +27,20 @@ class UserService {
     return users;
   }
 
-  async createUser(userData: CreateUserDTO): Promise<ListUserDTO> {
+  async createUser(userData: CreateUserDTO): Promise<UserEntity> {
     const user = new UserEntity(userData.name, userData.email, userData.password, true);
-    const createUser = await this.userRepository.save(user);
-    return new ListUserDTO(createUser.id, createUser.name, createUser.email);
+    await this.userRepository.save(user);
+    return user;
   }
 
   async delete(id: string) {
     await this.userRepository.delete(id);
   }
 
-  async updateUser(id: string, userData: UpdateUserDTO) {
+  async updateUser(id: string, userData: UpdateUserDTO): Promise<UserEntity> {
     const user = new UserEntity(userData.name, userData.email, userData.password, true);
     await this.userRepository.update(id, user);
-    return new ListUserDTO(id, userData.name, userData.email);
+    return user;
   }
 }
 
