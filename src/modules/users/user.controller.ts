@@ -22,8 +22,8 @@ class UserController {
   @Post()
   async createUser(@Body() userData: CreateUserDTO) {
     const user = new UserEntity(userData.name, userData.email, userData.password, true);
-    this.userRepository.createUser(user);
-    return new ListUserDTO(user.id, user.name, user.email);
+    const createUser = await this.userService.createUser(user);
+    return new ListUserDTO(createUser.id, createUser.name, createUser.email);
   }
 
   @Patch('/:id')
