@@ -29,23 +29,23 @@ class ProductEntity {
   @Column({ name: 'ACTIVE', default: true })
   active: boolean;
 
-  @ManyToOne(() => ProductCategoryEntity, { nullable: true, eager: true })
+  @ManyToOne(() => ProductCategoryEntity, { nullable: true, eager: true, cascade: true })
   category: ProductCategoryEntity;
 
-  @OneToMany(() => ProductImageEntity, (product) => product.product, { nullable: true, eager: true })
+  @OneToMany(() => ProductImageEntity, (product) => product.product, { nullable: true, eager: true, cascade: true })
   images: ProductImageEntity[];
 
-  @OneToMany(() => ProductDetailEntity, (product) => product.product, { nullable: true, eager: true })
+  @OneToMany(() => ProductDetailEntity, (product) => product.product, { nullable: true, eager: true, cascade: true })
   details: ProductDetailEntity[];
 
   @CreateDateColumn({ name: 'CREATED_AT' })
-  createAt: Date;
+  createAt!: Date;
 
   @UpdateDateColumn({ name: 'UPDATED_AT' })
-  updatedAt: Date;
+  updatedAt!: Date;
 
   @DeleteDateColumn({ name: 'DELETED_AT' })
-  deletedAt: Date;
+  deletedAt!: Date;
 }
 
 export default ProductEntity;

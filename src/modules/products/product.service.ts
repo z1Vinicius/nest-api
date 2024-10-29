@@ -27,6 +27,10 @@ class ProductService {
     });
     return products;
   }
+
+  async createProduct(product: ProductEntity) {
+    return await this.productRepository.save(product);
+  }
 }
 
 export default ProductService;

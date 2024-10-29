@@ -4,7 +4,7 @@ import ProductEntity from './product.entity';
 @Entity({ name: 'TB_PRODUCT_DETAILS', schema: process.env.DATABASE_SCHEMA })
 class ProductDetailEntity {
   @PrimaryGeneratedColumn('increment', { name: 'CD_PRODUCT_DETAIL' })
-  id: number;
+  id!: number;
 
   @Column({ name: 'NAME', nullable: false })
   name: string;

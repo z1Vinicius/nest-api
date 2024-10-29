@@ -1,5 +1,7 @@
-import { Body, Controller, Delete, Get, Param, Patch } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import CreateProductDto from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+import ProductEntity from './entities/product.entity';
 import ProductService from './product.service';
 
 @Controller('products')
@@ -14,6 +16,20 @@ export class ProductsController {
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.productRepository.listProducts();
+  }
+
+  @Post()
+  async createProduct(@Body() productData: CreateProductDto) {
+    const product = new ProductEntity();
+    product.name = productData.name;
+    product.price = productData.price;
+    product.active = true;
+    product.description = productData.description;
+    product.images = productData.images;
+    product.details = productData.details;
+    product.category = productData.category;
+    console.table(product);
+    return await this.productRepository.createProduct(product);
   }
 
   @Patch(':id')

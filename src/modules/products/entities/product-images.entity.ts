@@ -4,7 +4,7 @@ import ProductEntity from './product.entity';
 @Entity({ name: 'TB_PRODUCT_IMAGES', schema: process.env.DATABASE_SCHEMA })
 class ProductImageEntity {
   @PrimaryGeneratedColumn('increment', { name: 'CD_PRODUCT_IMAGE' })
-  id: number;
+  id!: number;
 
   @Column({ name: 'URL', nullable: false })
   url: string;

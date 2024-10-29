@@ -3,7 +3,7 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 @Entity({ name: 'TB_PRODUCT_CATEGORIES', schema: process.env.DATABASE_SCHEMA })
 class ProductCategoryEntity {
   @PrimaryGeneratedColumn('increment', { name: 'CD_PRODUCT_CATEGORY' })
-  id: number;
+  id!: number;
 
   @Column({ name: 'CATEGORY', nullable: false })
   name: string;
