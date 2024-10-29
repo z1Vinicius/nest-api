@@ -2,18 +2,21 @@ import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/commo
 import CreateUserDTO from './dto/create-user.dto';
 import ListUserDTO from './dto/list-user.dto';
 import UpdateUserDTO from './dto/update-user.dto';
-import UserEntity from './user.entity';
+import UserEntity from './entities/user.entity';
 import UserRepository from './user.repository';
+import UserService from './user.service';
 
 @Controller('/users')
 class UserController {
-  constructor(private userRepository: UserRepository) {}
+  constructor(
+    private userRepository: UserRepository,
+    private userService: UserService,
+  ) {}
 
   @Get()
   async getUsers(): Promise<ListUserDTO[]> {
-    const users = await this.userRepository.getUsers();
-    const userMapper = users.map((user) => new ListUserDTO(user.id, user.name, user.email));
-    return userMapper;
+    const users = await this.userService.listUsers();
+    return users;
   }
 
   @Post()
