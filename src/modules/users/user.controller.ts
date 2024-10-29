@@ -1,5 +1,4 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
-import { v4 as uuid } from 'uuid';
 import CreateUserDTO from './dto/create-user.dto';
 import ListUserDTO from './dto/list-user.dto';
 import UpdateUserDTO from './dto/update-user.dto';
@@ -19,12 +18,7 @@ class UserController {
 
   @Post()
   async createUser(@Body() userData: CreateUserDTO) {
-    const user = new UserEntity();
-    user.email = userData.email;
-    user.password = userData.password;
-    user.name = userData.name;
-    user.active = true;
-    user.id = uuid();
+    const user = new UserEntity(userData.name, userData.email, userData.password, true);
     this.userRepository.createUser(user);
     return new ListUserDTO(user.id, user.name, user.email);
   }
