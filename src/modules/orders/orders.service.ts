@@ -2,6 +2,7 @@ import UserEntity from '@modules/users/entities/user.entity';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import OrderEntity from './entities/order.entity';
 
@@ -12,27 +13,30 @@ export class OrdersService {
     @InjectRepository(UserEntity) private readonly userRepository: Repository<UserEntity>,
   ) {}
 
-  async create(userId: string): Promise<OrderEntity> {
-    const user = await this.userRepository.findOneBy({ id: userId });
-    console.table(user);
+  async create(orderData: CreateOrderDto): Promise<OrderEntity> {
+    const user = await this.userRepository.findOneBy({ id: orderData.user });
     const order = new OrderEntity(user);
     await this.orderRepository.save(order);
     return order;
   }
 
-  findAll() {
-    return `This action returns all orders`;
+  async findAll(): Promise<OrderEntity[]> {
+    return await this.orderRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} order`;
+  async findOne(id: string) {
+    return await this.orderRepository.findOneBy({ id: id });
   }
 
-  update(id: number, updateOrderDto: UpdateOrderDto) {
+  async update(id: number, updateOrderDto: UpdateOrderDto) {
     return `This action updates a #${id} order`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} order`;
+  async remove(id: string) {
+    const order = await this.findOne(id);
+    if (!order) {
+      throw new Error('Pedido não existe');
+    }
+    await this.orderRepository.remove(order);
   }
 }

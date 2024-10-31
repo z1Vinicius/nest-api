@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 import { OrderStatus } from '../enum/orders.status.enum';
 import UserEntity from './../../users/entities/user.entity';
-import OrderItemEntity from './order-product.entity';
+import OrderItemEntity from './order-item.entity';
 
 @Entity({ name: 'TB_ORDERS', schema: process.env.DATABASE_SCHEMA })
 class OrderEntity {
