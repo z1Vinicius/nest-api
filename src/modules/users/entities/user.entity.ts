@@ -28,7 +28,7 @@ class UserEntity {
   active: boolean;
 
   @OneToMany(() => OrderEntity, (order) => order.user)
-  orders!: OrderEntity[];
+  orders?: OrderEntity[];
 
   @CreateDateColumn({ name: 'CREATED_AT' })
   createAt: Date;

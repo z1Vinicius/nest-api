@@ -4,7 +4,6 @@ import {
   DeleteDateColumn,
   Entity,
   ManyToOne,
-  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -23,7 +22,7 @@ class OrderEntity {
   @ManyToOne(() => OrderItemEntity, (item) => item.order, { cascade: true })
   orderItems!: OrderItemEntity[];
 
-  @OneToMany(() => UserEntity, (user) => user.orders, { cascade: true, eager: true })
+  @ManyToOne(() => UserEntity, (user) => user.orders, { cascade: true, eager: true })
   user: UserEntity;
 
   @Column({ name: 'TOTAL', default: 0 })
@@ -37,6 +36,10 @@ class OrderEntity {
 
   @DeleteDateColumn({ name: 'DELETED_AT' })
   deletedAt!: Date;
+
+  constructor(user: UserEntity) {
+    this.user = user;
+  }
 }
 
 export default OrderEntity;
