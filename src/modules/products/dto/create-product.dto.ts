@@ -62,6 +62,10 @@ export class CreateProductDto {
 
   @IsNumber()
   @IsNotEmpty()
+  available: number;
+
+  @IsNumber()
+  @IsNotEmpty()
   isAvailable: number;
 
   @IsOptional()

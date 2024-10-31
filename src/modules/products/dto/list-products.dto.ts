@@ -28,6 +28,7 @@ class ListProductsDTO {
     readonly name: string,
     readonly description: string,
     readonly price: number,
+    readonly available: number,
     readonly active: boolean,
     readonly category: ListProductCategory,
     readonly images: ListImageDetail[],

@@ -1,15 +1,6 @@
 import ProductEntity from '../../products/entities/product.entity';
 
-import {
-  BeforeInsert,
-  BeforeUpdate,
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  OneToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { BeforeInsert, BeforeUpdate, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import OrderEntity from './order.entity';
 
 @Entity({ name: 'TB_ORDERS_ITEMS', schema: process.env.DATABASE_SCHEMA })
@@ -26,12 +17,10 @@ class OrderItemEntity {
   @ManyToOne(() => OrderEntity, (order) => order.orderItems, { onDelete: 'CASCADE' })
   order: OrderEntity;
 
-  @OneToOne(() => ProductEntity, { cascade: true, eager: true })
-  @JoinColumn({ name: 'CD_PRODUCT' })
+  @ManyToOne(() => ProductEntity, (product) => product.orderItems, { cascade: ['update'], eager: true })
   product: ProductEntity;
 
-  constructor(order: OrderEntity, product: ProductEntity, quantity: number) {
-    this.order = order;
+  constructor(product: ProductEntity, quantity: number) {
     this.product = product;
     this.quantity = quantity;
   }
@@ -40,6 +29,13 @@ class OrderItemEntity {
   @BeforeUpdate()
   private async refreshTotalPrice() {
     this.totalPrice = this.product.price * this.quantity;
+  }
+
+  @BeforeInsert()
+  private async refreshTotal() {
+    console.table(this.product);
+    this.product.available = this.product.available - this.quantity;
+    console.log(this.product.available);
   }
 }
 

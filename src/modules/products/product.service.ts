@@ -20,6 +20,7 @@ class ProductService {
         product.name,
         product.description,
         product.price,
+        product.available,
         product.active,
         product.category,
         product.images,
@@ -38,7 +39,7 @@ class ProductService {
     product.images = productData.images;
     product.details = productData.details;
     product.category = productData.category;
-    console.table(product);
+    product.available = productData.available;
     return await this.productRepository.save(product);
   }
 

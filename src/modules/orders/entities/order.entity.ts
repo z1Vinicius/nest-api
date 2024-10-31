@@ -1,9 +1,12 @@
 import {
+  BeforeInsert,
+  BeforeUpdate,
   Column,
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -19,10 +22,10 @@ class OrderEntity {
   @Column({ name: 'STATUS', enum: OrderStatus, default: OrderStatus.Pending })
   status: OrderStatus;
 
-  @ManyToOne(() => OrderItemEntity, (item) => item.order, { cascade: true })
-  orderItems!: OrderItemEntity[];
+  @OneToMany(() => OrderItemEntity, (item) => item.order, { cascade: true, eager: true })
+  orderItems: OrderItemEntity[];
 
-  @ManyToOne(() => UserEntity, (user) => user.orders, { cascade: true, eager: true })
+  @ManyToOne(() => UserEntity, (user) => user.orders, { eager: true })
   user: UserEntity;
 
   @Column({ name: 'TOTAL', default: 0 })
@@ -39,6 +42,12 @@ class OrderEntity {
 
   constructor(user: UserEntity) {
     this.user = user;
+  }
+
+  @BeforeInsert()
+  @BeforeUpdate()
+  async refreshTotalOrder() {
+    this.total = this.orderItems.reduce((accumulator, current) => accumulator + current.quantity, 0);
   }
 }
 

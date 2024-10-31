@@ -8,6 +8,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import OrderItemEntity from './../../orders/entities/order-item.entity';
 import ProductCategoryEntity from './product-category.entity';
 import ProductDetailEntity from './product-details.entity';
 import ProductImageEntity from './product-images.entity';
@@ -29,8 +30,14 @@ class ProductEntity {
   @Column({ name: 'ACTIVE', default: true })
   active: boolean;
 
+  @Column({ name: 'AVAILABLE', default: 0 })
+  available: number;
+
   @ManyToOne(() => ProductCategoryEntity, { nullable: true, eager: true, cascade: true })
   category: ProductCategoryEntity;
+
+  @OneToMany(() => OrderItemEntity, (orderItem) => orderItem.product, { cascade: true })
+  orderItems: OrderItemEntity[];
 
   @OneToMany(() => ProductImageEntity, (product) => product.product, { nullable: true, eager: true, cascade: true })
   images!: ProductImageEntity[];
