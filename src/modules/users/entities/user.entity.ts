@@ -1,4 +1,14 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import OrderEntity from '../../orders/entities/order.entity';
+
+import {
+  Column,
+  CreateDateColumn,
+  DeleteDateColumn,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity({ name: 'TB_USERS', schema: process.env.DATABASE_SCHEMA })
 class UserEntity {
@@ -16,6 +26,9 @@ class UserEntity {
 
   @Column({ name: 'ACTIVE', default: true })
   active: boolean;
+
+  @OneToMany(() => OrderEntity, (order) => order.user)
+  orders!: OrderEntity[];
 
   @CreateDateColumn({ name: 'CREATED_AT' })
   createAt: Date;

@@ -17,7 +17,7 @@ class OracleConfigService implements TypeOrmOptionsFactory {
       password: this.configService.get<string>('DATABASE_PASSWORD'),
       serviceName: this.configService.get<string>('DATABASE_NAME'),
       database: this.configService.get<string>('DATABASE_NAME'),
-      entities: [__dirname + '/../../../**/**/*.entity{.js,.ts}'],
+      entities: [__dirname + './../../../**/**/*.entity{.js,.ts}'],
       synchronize: false,
     };
   }
