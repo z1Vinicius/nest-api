@@ -5,7 +5,8 @@ import ProductEntity from '../entities/product.entity';
 
 class ProductDetailDTO {
   @IsNumber()
-  id!: number;
+  @IsOptional()
+  id: number;
 
   @IsString()
   @IsNotEmpty()
@@ -20,7 +21,8 @@ class ProductDetailDTO {
 
 class ProductImageDTO {
   @IsNumber()
-  id!: number;
+  @IsOptional()
+  id: number;
 
   @IsString()
   @IsNotEmpty()

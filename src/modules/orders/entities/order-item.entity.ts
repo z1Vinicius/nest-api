@@ -33,9 +33,7 @@ class OrderItemEntity {
 
   @BeforeInsert()
   private async refreshTotal() {
-    console.table(this.product);
     this.product.available = this.product.available - this.quantity;
-    console.log(this.product.available);
   }
 }
 

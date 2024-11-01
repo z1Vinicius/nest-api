@@ -40,10 +40,10 @@ class ProductEntity {
   orderItems: OrderItemEntity[];
 
   @OneToMany(() => ProductImageEntity, (product) => product.product, { nullable: true, eager: true, cascade: true })
-  images!: ProductImageEntity[];
+  images: ProductImageEntity[];
 
   @OneToMany(() => ProductDetailEntity, (product) => product.product, { nullable: true, eager: true, cascade: true })
-  details!: ProductDetailEntity[];
+  details: ProductDetailEntity[];
 
   @CreateDateColumn({ name: 'CREATED_AT' })
   createAt!: Date;

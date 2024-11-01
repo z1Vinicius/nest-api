@@ -18,10 +18,10 @@ class UserEntity {
   @Column({ name: 'DE_USER', length: 50, nullable: false })
   name: string;
 
-  @Column({ name: 'EMAIL', nullable: false })
+  @Column({ name: 'EMAIL', nullable: false, select: false })
   email: string;
 
-  @Column({ name: 'PASSWORD', nullable: false })
+  @Column({ name: 'PASSWORD', nullable: false, select: false })
   password: string;
 
   @Column({ name: 'ACTIVE', default: true })
