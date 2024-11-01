@@ -19,12 +19,6 @@ class OracleConfigService implements TypeOrmOptionsFactory {
       database: this.configService.get<string>('DATABASE_NAME'),
       entities: [__dirname + './../../../**/**/*.entity{.js,.ts}'],
       synchronize: false,
-      extra: {
-        max: 10, // número máximo de conexões no pool
-        min: 1, // número mínimo de conexões no pool
-        idleTimeoutMillis: 30000, // tempo que uma conexão pode ficar ociosa
-        connectionTimeoutMillis: 2000, // tempo máximo para obter uma conexão
-      },
     };
   }
 }

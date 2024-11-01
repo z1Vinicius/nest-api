@@ -1,5 +1,6 @@
 import ProductEntity from '../../products/entities/product.entity';
 
+import { BadRequestException } from '@nestjs/common';
 import { BeforeInsert, BeforeUpdate, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import OrderEntity from './order.entity';
 
@@ -33,6 +34,11 @@ class OrderItemEntity {
 
   @BeforeInsert()
   private async refreshTotal() {
+    if (this.quantity > this.product.available) {
+      throw new BadRequestException(
+        `Quantidade de produto (${this.quantity}) maior que a quantidade disponível (${this.product.available}).`,
+      );
+    }
     this.product.available = this.product.available - this.quantity;
   }
 }

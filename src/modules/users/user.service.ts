@@ -13,11 +13,11 @@ class UserService {
     private readonly userRepository: Repository<UserEntity>,
   ) {}
 
-  async getUser(id: string): Promise<UserEntity> {
+  async getUser(id: string): Promise<UserEntity | null> {
     return await this.userRepository.findOne({ where: { id: id } });
   }
 
-  async getUserByEmail(email: string): Promise<UserEntity> {
+  async getUserByEmail(email: string): Promise<UserEntity | null> {
     return await this.userRepository.findOne({ where: { email: email } });
   }
 

@@ -6,6 +6,8 @@ import UserService from './user.service';
 import RequireUserValidator from './validation/require-user.validator';
 import UniqueEmailValidator from './validation/unique-email.validator';
 
+// console.log('Mudou algo....');
+
 @Module({
   controllers: [UserController],
   providers: [UserService, UniqueEmailValidator, RequireUserValidator],
