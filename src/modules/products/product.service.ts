@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -46,7 +46,7 @@ class ProductService {
   async updateProduct(productId: string, productData: UpdateProductDto) {
     const product = await this.productRepository.findOneBy({ id: productId });
     if (!product) {
-      throw new Error('Produto não existe ou está desativado');
+      throw new NotFoundException('Produto não existe');
     }
     Object.entries(productData).forEach(([key, value]) => {
       if (key === 'id') return;

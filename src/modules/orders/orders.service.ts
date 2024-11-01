@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { In, Repository } from 'typeorm';
 import ProductEntity from './../../modules/products/entities/product.entity';
@@ -18,12 +18,15 @@ export class OrdersService {
 
   async create(orderData: CreateOrderDto): Promise<OrderEntity> {
     const user = await this.userRepository.findOneBy({ id: orderData.user });
+    if (!user) {
+      throw new NotFoundException('Usuário não existe');
+    }
     const productsIds = orderData.orderItems.map((item) => item.product);
     const productsRelated = await this.productRepository.findBy({ id: In(productsIds) });
     const ordemItems = orderData.orderItems.map((product) => {
       const relatedProduct = productsRelated.find((relatedProduct) => product.product === relatedProduct.id);
       if (!relatedProduct) {
-        throw new Error('Existem produtos não cadastrados');
+        throw new NotFoundException('Produto não existe');
       }
       const ordemItem = new OrderItemEntity(relatedProduct, product.quantity);
       return ordemItem;
@@ -45,7 +48,7 @@ export class OrdersService {
   async updateOrderStatus(id: string, updateOrderDto: UpdateOrderStatusDto) {
     const order = await this.findOne(id);
     if (!order) {
-      throw new Error('Pedido não existe');
+      throw new NotFoundException('Pedido não existe');
     }
     order.status = updateOrderDto.orderStatus;
     await this.orderRepository.save(order);
@@ -55,7 +58,7 @@ export class OrdersService {
   async remove(id: string) {
     const order = await this.findOne(id);
     if (!order) {
-      throw new Error('Pedido não existe');
+      throw new NotFoundException('Pedido não existe');
     }
     await this.orderRepository.remove(order);
   }
