@@ -4,7 +4,7 @@ import { In, Repository } from 'typeorm';
 import ProductEntity from './../../modules/products/entities/product.entity';
 import UserEntity from './../../modules/users/entities/user.entity';
 import { CreateOrderDto } from './dto/create-order.dto';
-import { UpdateOrderDto } from './dto/update-order.dto';
+import { UpdateOrderStatusDto } from './dto/update-order.dto';
 import OrderItemEntity from './entities/order-item.entity';
 import OrderEntity from './entities/order.entity';
 
@@ -42,8 +42,14 @@ export class OrdersService {
     return await this.orderRepository.findOneBy({ id: id });
   }
 
-  async update(id: number, updateOrderDto: UpdateOrderDto) {
-    return `This action updates a #${id} order`;
+  async updateOrderStatus(id: string, updateOrderDto: UpdateOrderStatusDto) {
+    const order = await this.findOne(id);
+    if (!order) {
+      throw new Error('Pedido não existe');
+    }
+    order.status = updateOrderDto.orderStatus;
+    await this.orderRepository.save(order);
+    return order;
   }
 
   async remove(id: string) {
