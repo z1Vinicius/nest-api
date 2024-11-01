@@ -3,7 +3,7 @@ import { Type } from 'class-transformer';
 import { IsNotEmpty, IsNumber, IsOptional, IsString, ValidateNested } from 'class-validator';
 import ProductEntity from '../entities/product.entity';
 
-class ProductDetailDTO {
+export class ProductDetailDTO {
   @IsNumber()
   @IsOptional()
   id: number;
@@ -19,7 +19,7 @@ class ProductDetailDTO {
   product: ProductEntity;
 }
 
-class ProductImageDTO {
+export class ProductImageDTO {
   @IsNumber()
   @IsOptional()
   id: number;
@@ -35,7 +35,7 @@ class ProductImageDTO {
   product: ProductEntity;
 }
 
-class ProductCategoryDTO {
+export class ProductCategoryDTO {
   @IsNumber()
   id!: number;
 
@@ -66,10 +66,6 @@ export class CreateProductDto {
   @IsNotEmpty()
   available: number;
 
-  @IsNumber()
-  @IsNotEmpty()
-  isAvailable: number;
-
   @IsOptional()
   @ValidateNested({ each: true })
   @Type(() => ProductCategoryDTO)
@@ -85,5 +81,3 @@ export class CreateProductDto {
   @Type(() => ProductImageDTO)
   images: ProductImageDTO[];
 }
-
-export default CreateProductDto;

@@ -1,0 +1,9 @@
+.git
+.github
+.hust
+*.tgz
+# data
+log
+node_modules
+npm-debug.log
+tokens

@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
-import CreateProductDto from './dto/create-product.dto';
+import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import ProductService from './product.service';
 
@@ -24,7 +24,7 @@ export class ProductsController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
-    // return this.productRepository.update(+id, updateProductDto);
+    return this.productRepository.updateProduct(id, updateProductDto);
   }
 
   @Delete(':id')

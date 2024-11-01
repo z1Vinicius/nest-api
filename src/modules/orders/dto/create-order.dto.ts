@@ -1,6 +1,6 @@
-import RequireUser from '@modules/users/decorators/require-user.decorator';
 import { Type } from 'class-transformer';
 import { ArrayMinSize, IsUUID, ValidateNested } from 'class-validator';
+import RequireUser from './../../../modules/users/decorators/require-user.decorator';
 import { CreateOrderItemDto } from './create-order-item.dto';
 
 export class CreateOrderDto {

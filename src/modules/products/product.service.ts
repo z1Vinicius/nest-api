@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import CreateProductDto from './dto/create-product.dto';
+import { CreateProductDto } from './dto/create-product.dto';
 import { ListProductsDTO } from './dto/list-products.dto';
+import { UpdateProductDto } from './dto/update-product.dto';
 import ProductEntity from './entities/product.entity';
 
 @Injectable()
@@ -39,6 +40,18 @@ class ProductService {
     product.images = productData.images;
     product.details = productData.details;
     product.category = productData.category;
+    return await this.productRepository.save(product);
+  }
+
+  async updateProduct(productId: string, productData: UpdateProductDto) {
+    const product = await this.productRepository.findOneBy({ id: productId });
+    if (!product) {
+      throw new Error('Produto não existe ou está desativado');
+    }
+    Object.entries(productData).forEach(([key, value]) => {
+      if (key === 'id') return;
+      product[key] = value;
+    });
     return await this.productRepository.save(product);
   }
 

@@ -1,8 +1,8 @@
-import ProductEntity from '@modules/products/entities/product.entity';
-import UserEntity from '@modules/users/entities/user.entity';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { In, Repository } from 'typeorm';
+import ProductEntity from './../../modules/products/entities/product.entity';
+import UserEntity from './../../modules/users/entities/user.entity';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import OrderItemEntity from './entities/order-item.entity';
