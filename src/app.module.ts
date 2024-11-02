@@ -6,6 +6,7 @@ import { OracleConfigService } from './infra/db/settings/oracle.config.service';
 import { OrdersModule } from './modules/orders/orders.module';
 import ProductsModule from './modules/products/products.module';
 import UserModule from './modules/users/user.module';
+import { PostgresConfigService } from './infra/db/settings/postgres.config.service';
 
 @Module({
   imports: [
@@ -13,7 +14,7 @@ import UserModule from './modules/users/user.module';
     ProductsModule,
     OrdersModule,
     ConfigModule.forRoot({ isGlobal: true }),
-    TypeOrmModule.forRootAsync({ useClass: OracleConfigService, inject: [OracleConfigService] }),
+    TypeOrmModule.forRootAsync({ useClass: PostgresConfigService, inject: [PostgresConfigService] }),
   ],
   providers: [],
 })
