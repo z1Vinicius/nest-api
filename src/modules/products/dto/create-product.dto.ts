@@ -37,6 +37,7 @@ export class ProductImageDTO {
 
 export class ProductCategoryDTO {
   @IsNumber()
+  @IsOptional()
   id!: number;
 
   @IsString()

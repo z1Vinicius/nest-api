@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Patch, Post } from '@nestjs/common';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderStatusDto } from './dto/update-order.dto';
 import { OrdersService } from './orders.service';
@@ -14,6 +14,7 @@ export class OrdersController {
 
   @Get()
   findAll() {
+    throw new Error('aaa')
     return this.ordersService.findAll();
   }
 
