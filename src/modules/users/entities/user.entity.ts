@@ -1,6 +1,9 @@
+import { encryptPassword } from '../../../utils/password';
 import OrderEntity from '../../orders/entities/order.entity';
 
 import {
+  BeforeInsert,
+  BeforeUpdate,
   Column,
   CreateDateColumn,
   DeleteDateColumn,
@@ -39,7 +42,11 @@ class UserEntity {
   @DeleteDateColumn({ name: 'DELETED_AT' })
   deletedAt: Date;
 
-
+  @BeforeInsert()
+  @BeforeUpdate()
+  private async protectPassword() {
+    // this.password = encryptPassword(this.password);
+  }
 }
 
 export default UserEntity;

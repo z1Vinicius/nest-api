@@ -1,11 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import {
-  IsEmail,
-  IsNotEmpty,
-  IsString,
-  IsStrongPassword,
-} from 'class-validator';
+import { IsEmail, IsNotEmpty, IsString, IsStrongPassword, Matches } from 'class-validator';
 import UniqueEmail from '../decorators/unique-email.decorator';
+
+const passwordPattern = '^(?=.*[a-z])(?=.*[A-Z])(?=.*d)(?=.*[!@#$%^&*()_-+=<>?/])[A-Za-zd!@#$%^&*()_-+=<>?/]{8,}$';
 
 Injectable();
 class CreateUserDTO {
@@ -18,11 +15,9 @@ class CreateUserDTO {
   @UniqueEmail({ message: 'E-mail já cadastrado' })
   email: string;
 
-  @IsStrongPassword(
-    { minLength: 6 },
-    { message: 'O tamanho mínimo para senha é 6' },
-  )
+  @IsStrongPassword({ minLength: 6 }, { message: 'O tamanho mínimo para senha é 6' })
   @IsNotEmpty({ message: 'É necessário passar uma senha' })
+  @Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W+)(.{6,30})$/, { message: 'Senha não está no padrão' })
   password: string;
 }
 

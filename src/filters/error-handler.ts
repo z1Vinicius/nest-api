@@ -8,7 +8,7 @@ export class HttpExceptionHandler implements ExceptionFilter {
 
   catch(exception: unknown, host: ArgumentsHost) {
     const { httpAdapter } = this.adapterHost;
-
+    console.log(exception);
     const context = host.switchToHttp();
     const response = context.getResponse<Response>(); // Changed getRequest to getResponse
     const request = context.getRequest<Request>(); // Changed getRequest to getResponse

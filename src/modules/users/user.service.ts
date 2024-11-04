@@ -29,6 +29,7 @@ class UserService {
 
   async createUser(userData: CreateUserDTO): Promise<UserEntity> {
     const user = new UserEntity();
+    Object.assign(user, userData as UserEntity);
     await this.userRepository.save(user);
     return user;
   }

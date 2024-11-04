@@ -31,6 +31,10 @@ class ProductService {
     return products;
   }
 
+  async findProduct(id: string): Promise<ListProductsDTO> {
+    return this.productRepository.findOneByOrFail({ id: id });
+  }
+
   async createProduct(productData: CreateProductDto) {
     const product = new ProductEntity();
     Object.assign(product, productData as ProductEntity);

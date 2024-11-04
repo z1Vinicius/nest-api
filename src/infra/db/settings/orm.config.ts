@@ -11,7 +11,7 @@ const dbConnectionConfig: DataSourceOptions = {
   password: process.env.DATABASE_PASSWORD || 'root',
   database: process.env.DATABASE_NAME || '',
   migrationsTableName: 'TB_MIGRATIONS',
-  entities: ['src/**/**.entity{.ts,.js}', 'src/**/**/**.entity{.ts,.js}'],
+  entities: ['src/**/**.entity{.ts,.js}', 'src/**/**/**.entity{.ts,.js}', 'node_modules/nestjs-admin/**/*.entity.js'],
   migrations: ['src/infra/db/migrations/*.{ts,js}'],
   logging: process.env.DATABASE_LOGGING === 'true',
   synchronize: process.env.DATABASE_SYNC === 'true',
