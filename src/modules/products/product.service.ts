@@ -33,13 +33,8 @@ class ProductService {
 
   async createProduct(productData: CreateProductDto) {
     const product = new ProductEntity();
-    product.name = productData.name;
-    product.price = productData.price;
-    product.active = true;
-    product.description = productData.description;
-    product.images = productData.images;
-    product.details = productData.details;
-    product.category = productData.category;
+    Object.assign(product, productData as ProductEntity);
+
     return await this.productRepository.save(product);
   }
 

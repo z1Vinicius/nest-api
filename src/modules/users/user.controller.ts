@@ -22,8 +22,9 @@ class UserController {
 
   @Put('/:id')
   async updateUser(@Body() userData: UpdateUserDTO, @Param('id') id: string) {
-    await this.userService.updateUser(id, userData);
-    return new ListUserDTO(id, userData.name, userData.email);
+    const user = await this.userService.updateUser(id, userData);
+
+    return new ListUserDTO(id, user.name, user.email);
   }
 
   @Delete('/:id')
