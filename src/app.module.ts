@@ -9,6 +9,7 @@ import * as memcachedStore from 'cache-manager-memcached-store';
 import * as Memcache from 'memcache-pp';
 import HttpExceptionHandler from './filters/error-handler';
 import { OracleConfigService } from './infra/db/settings/oracle.config.service';
+import { AuthModule } from './modules/auth/auth.module';
 import { OrdersModule } from './modules/orders/orders.module';
 import ProductsModule from './modules/products/products.module';
 import UserModule from './modules/users/user.module';
@@ -18,6 +19,7 @@ import UserModule from './modules/users/user.module';
     UserModule,
     ProductsModule,
     OrdersModule,
+    AuthModule,
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRootAsync({ useClass: OracleConfigService, inject: [OracleConfigService] }),
     CacheModule.registerAsync({
