@@ -1,11 +1,11 @@
 import ProductEntity from '../../products/entities/product.entity';
 
 import { BadRequestException } from '@nestjs/common';
-import { BeforeInsert, BeforeUpdate, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, BeforeInsert, BeforeUpdate, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import OrderEntity from './order.entity';
 
 @Entity({ name: 'TB_ORDERS_ITEMS', schema: process.env.DATABASE_SCHEMA })
-class OrderItemEntity {
+class OrderItemEntity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid', { name: 'CD_ORDER_ITEM' })
   id!: string;
 
@@ -20,11 +20,6 @@ class OrderItemEntity {
 
   @ManyToOne(() => ProductEntity, (product) => product.orderItems, { cascade: ['update'], eager: true })
   product: ProductEntity;
-
-  constructor(product: ProductEntity, quantity: number) {
-    this.product = product;
-    this.quantity = quantity;
-  }
 
   @BeforeInsert()
   @BeforeUpdate()

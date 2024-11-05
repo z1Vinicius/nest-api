@@ -1,6 +1,7 @@
 import OrderEntity from '../../orders/entities/order.entity';
 
 import {
+  BaseEntity,
   BeforeInsert,
   BeforeUpdate,
   Column,
@@ -13,7 +14,7 @@ import {
 } from 'typeorm';
 
 @Entity({ name: 'TB_USERS', schema: process.env.DATABASE_SCHEMA })
-class UserEntity {
+class UserEntity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid', { name: 'CD_USER' })
   id!: string;
 

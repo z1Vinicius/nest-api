@@ -1,4 +1,5 @@
 import {
+  BaseEntity,
   BeforeInsert,
   BeforeUpdate,
   Column,
@@ -15,7 +16,7 @@ import UserEntity from './../../users/entities/user.entity';
 import OrderItemEntity from './order-item.entity';
 
 @Entity({ name: 'TB_ORDERS', schema: process.env.DATABASE_SCHEMA })
-class OrderEntity {
+class OrderEntity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid', { name: 'CD_ORDER' })
   id!: string;
 
@@ -39,10 +40,6 @@ class OrderEntity {
 
   @DeleteDateColumn({ name: 'DELETED_AT' })
   deletedAt!: Date;
-
-  constructor(user: UserEntity) {
-    this.user = user;
-  }
 
   @BeforeInsert()
   @BeforeUpdate()

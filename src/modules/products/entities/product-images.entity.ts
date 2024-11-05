@@ -1,8 +1,8 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import ProductEntity from './product.entity';
 
 @Entity({ name: 'TB_PRODUCT_IMAGES', schema: process.env.DATABASE_SCHEMA })
-class ProductImageEntity {
+class ProductImageEntity extends BaseEntity {
   @PrimaryGeneratedColumn('increment', { name: 'CD_PRODUCT_IMAGE' })
   id!: number;
 

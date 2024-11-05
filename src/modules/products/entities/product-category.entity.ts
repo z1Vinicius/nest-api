@@ -1,7 +1,7 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'TB_PRODUCT_CATEGORIES', schema: process.env.DATABASE_SCHEMA })
-class ProductCategoryEntity {
+class ProductCategoryEntity extends BaseEntity {
   @PrimaryGeneratedColumn('increment', { name: 'CD_PRODUCT_CATEGORY' })
   id!: number;
 

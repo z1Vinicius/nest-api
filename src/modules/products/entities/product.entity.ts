@@ -1,4 +1,5 @@
 import {
+  BaseEntity,
   Column,
   CreateDateColumn,
   DeleteDateColumn,
@@ -14,7 +15,7 @@ import ProductDetailEntity from './product-details.entity';
 import ProductImageEntity from './product-images.entity';
 
 @Entity({ name: 'TB_PRODUCTS', schema: process.env.DATABASE_SCHEMA })
-class ProductEntity {
+class ProductEntity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid', { name: 'CD_PRODUCT' })
   id!: string;
 

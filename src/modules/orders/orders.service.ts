@@ -28,10 +28,13 @@ export class OrdersService {
       if (!relatedProduct) {
         throw new NotFoundException('Produto não existe');
       }
-      const ordemItem = new OrderItemEntity(relatedProduct, product.quantity);
+      const ordemItem = new OrderItemEntity();
+      ordemItem.product = relatedProduct;
+      ordemItem.quantity = product.quantity;
       return ordemItem;
     });
-    const order = new OrderEntity(user);
+    const order = new OrderEntity();
+    order.user = user;
     order.orderItems = ordemItems;
     await this.orderRepository.save(order);
     return order;
