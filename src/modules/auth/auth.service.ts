@@ -1,12 +1,17 @@
 import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import UserService from '../users/user.service';
+import { IAuthPayload } from './types/auth';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly userRepository: UserService) {}
+  constructor(
+    private readonly userRepository: UserService,
+    private readonly jwtService: JwtService,
+  ) {}
 
-  async login(email: string, password: string) {
+  async signIn(email: string, password: string) {
     const user = await this.userRepository.getUserByEmail(email);
     if (!user) {
       throw new BadRequestException('Usuário não está cadastrado');
@@ -15,6 +20,7 @@ export class AuthService {
     if (!comparePassword) {
       throw new UnauthorizedException('A senha informada está incorreta');
     }
-    return { message: 'Usuário autenticado' };
+    const payload: IAuthPayload = { sub: user.id, email: user.email };
+    return { accessToken: await this.jwtService.signAsync(payload) };
   }
 }

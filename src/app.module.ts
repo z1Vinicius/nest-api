@@ -16,12 +16,8 @@ import UserModule from './modules/users/user.module';
 
 @Module({
   imports: [
-    UserModule,
-    ProductsModule,
-    OrdersModule,
-    AuthModule,
-    ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRootAsync({ useClass: OracleConfigService, inject: [OracleConfigService] }),
+    ConfigModule.forRoot({ isGlobal: true }),
     CacheModule.registerAsync({
       isGlobal: true,
       useFactory: async () =>
@@ -33,6 +29,10 @@ import UserModule from './modules/users/user.module';
           },
         }),
     }),
+    UserModule,
+    ProductsModule,
+    OrdersModule,
+    AuthModule,
   ],
   providers: [
     {
