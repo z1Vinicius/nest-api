@@ -11,6 +11,7 @@ import UniqueEmailValidator from './validation/unique-email.validator';
   controllers: [UserController],
   providers: [UserService, UniqueEmailValidator, RequireUserValidator],
   imports: [TypeOrmModule.forFeature([UserEntity]), DefaultAdminModule, DefaultAdminModule],
+  exports: [UserService],
 })
 class UserModule {
   constructor(private readonly adminSite: DefaultAdminSite) {

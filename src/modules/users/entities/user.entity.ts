@@ -1,4 +1,3 @@
-import { encryptPassword } from '../../../utils/password';
 import OrderEntity from '../../orders/entities/order.entity';
 
 import {
@@ -21,10 +20,10 @@ class UserEntity {
   @Column({ name: 'DE_USER', length: 50, nullable: false })
   name: string;
 
-  @Column({ name: 'EMAIL', nullable: false, select: false })
+  @Column({ name: 'EMAIL', nullable: false })
   email: string;
 
-  @Column({ name: 'PASSWORD', nullable: false, select: false })
+  @Column({ name: 'PASSWORD', nullable: false })
   password: string;
 
   @Column({ name: 'ACTIVE', default: true })
