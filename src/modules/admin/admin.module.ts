@@ -1,36 +1,23 @@
 // src/admin/admin.module.ts
 
 import { Module } from '@nestjs/common';
-import { getRepositoryToken, TypeOrmModule } from '@nestjs/typeorm';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import * as bcrypt from 'bcrypt';
 import { validate } from 'class-validator';
-import { Repository } from 'typeorm';
+import OrderItemEntity from '../orders/entities/order-item.entity';
+import OrderEntity from '../orders/entities/order.entity';
+import ProductCategoryEntity from '../products/entities/product-category.entity';
+import ProductDetailEntity from '../products/entities/product-details.entity';
+import ProductEntity from '../products/entities/product.entity';
 import UserEntity from '../users/entities/user.entity';
+import UserModule from '../users/user.module';
+import UserService from '../users/user.service';
 
-interface CurrentAdmin {
-  email: string;
-  title?: string;
-  avatarUrl?: string;
-  id?: string;
-  theme?: string;
-  _auth?: Record<string, any>;
-  [key: string]: any;
-}
-
-const authenticate = {
-  inject: [getRepositoryToken(UserEntity)],
-  useFactory: (userRepository: Repository<UserEntity>) => {
-    return async function validateCredentials(email: string, password: string): Promise<CurrentAdmin | null> {
-      const user = await userRepository.findOneBy({ email });
-      if (user && password === user.password) {
-        return { email: user.email, id: user.id };
-      }
-      return null;
-    };
-  },
-};
+console.log('teste');
 
 @Module({
   imports: [
+    UserModule,
     TypeOrmModule.forFeature([UserEntity]),
     (async () => {
       const AdminJs = await import('adminjs');
@@ -44,20 +31,40 @@ const authenticate = {
       AdminJs.default.registerAdapter({ Database, Resource });
 
       return AdminJsNest.default.AdminModule.createAdminAsync({
-        useFactory: async (userRepository: Repository<UserEntity>) => ({
-          adminJsOptions: {
-            rootPath: '/admin',
-            resources: [UserEntity],
-          },
-          //   auth: {
-          //     authenticate: ,
-          //     cookieName: 'adminjs',
-          //     cookiePassword: 'secret',
-          //   },
-        }),
-        inject: [TypeOrmModule.forFeature([UserEntity])],
+        useFactory: (userRepository: UserService) => {
+          return {
+            adminJsOptions: {
+              rootPath: '/admin',
+              resources: [
+                UserEntity,
+                ProductEntity,
+                ProductCategoryEntity,
+                ProductDetailEntity,
+                OrderEntity,
+                OrderItemEntity,
+              ],
+            },
+            auth: {
+              authenticate: async (email, password) => {
+                const user = await userRepository.getUserByEmail(email);
+                if (user) {
+                  const matched = await bcrypt.compare(password, user.password);
+                  if (matched) {
+                    return Promise.resolve({ email: email });
+                  }
+                }
+                return null;
+              },
+              cookieName: 'admin',
+              cookiePassword: 'enterString',
+            },
+          };
+        },
+        imports: [UserModule],
+        inject: [UserService],
       });
     })(),
   ],
+  providers: [UserService],
 })
 export class AdminModule {}
