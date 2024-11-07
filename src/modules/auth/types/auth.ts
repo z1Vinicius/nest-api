@@ -3,4 +3,9 @@ interface IAuthPayload {
   email: string;
 }
 
-export { IAuthPayload };
+interface IUserPayload {
+  sub: string;
+  nameUser: string;
+}
+
+export { IAuthPayload, IUserPayload };
