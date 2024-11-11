@@ -20,12 +20,11 @@ import { AuthService } from './auth.service';
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
         secret: configService.get<string>('AUTH_KEY'),
-        global: true,
         signOptions: { expiresIn: '72h' },
       }),
       inject: [ConfigService],
+      global: true,
     }),
   ],
-  exports: [JwtModule],
 })
 export class AuthModule {}

@@ -6,12 +6,12 @@ import ListUserDTO from './dto/list-user.dto';
 import UpdateUserDTO from './dto/update-user.dto';
 import UserService from './user.service';
 
+@UseGuards(AuthGuard)
 @Controller('/users')
 class UserController {
   constructor(private userService: UserService) {}
 
   @Get()
-  @UseGuards(AuthGuard)
   async getUsers(): Promise<ListUserDTO[]> {
     const users = await this.userService.listUsers();
     return users;

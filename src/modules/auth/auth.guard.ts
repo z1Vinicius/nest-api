@@ -18,9 +18,7 @@ export class AuthGuard implements CanActivate {
       throw new UnauthorizedException('Token não presente na requisição');
     }
     try {
-      const payload: IUserPayload = await this.jwtService.verifyAsync(token, {
-        secret: this.configService.get<string>('AUTH_KEY'),
-      });
+      const payload: IUserPayload = await this.jwtService.verifyAsync(token);
       request.user = payload;
     } catch (error) {
       console.error(error);

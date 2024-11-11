@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { In, Repository } from 'typeorm';
 import ProductEntity from './../../modules/products/entities/product.entity';
@@ -16,11 +16,16 @@ export class OrdersService {
     @InjectRepository(UserEntity) private readonly userRepository: Repository<UserEntity>,
   ) {}
 
-  async create(orderData: CreateOrderDto): Promise<OrderEntity> {
-    const user = await this.userRepository.findOneBy({ id: orderData.user });
+  async getUser(userId: string) {
+    const user = await this.userRepository.findOneBy({ id: userId });
     if (!user) {
       throw new NotFoundException('Usuário não existe');
     }
+    return user;
+  }
+
+  async create(userId: string, orderData: CreateOrderDto): Promise<OrderEntity> {
+    const user = await this.getUser(userId);
     const productsIds = orderData.orderItems.map((item) => item.product);
     const productsRelated = await this.productRepository.findBy({ id: In(productsIds) });
     const ordemItems = orderData.orderItems.map((product) => {
@@ -44,14 +49,22 @@ export class OrdersService {
     return await this.orderRepository.find();
   }
 
+  async findByUser(userId: string): Promise<OrderEntity[]> {
+    const user = await this.getUser(userId);
+    return await this.orderRepository.find({ where: { user: user }, relations: { user: true } });
+  }
+
   async findOne(id: string) {
     return await this.orderRepository.findOneBy({ id: id });
   }
 
-  async updateOrderStatus(id: string, updateOrderDto: UpdateOrderStatusDto) {
+  async updateOrderStatus(id: string, userId: string, updateOrderDto: UpdateOrderStatusDto) {
     const order = await this.findOne(id);
     if (!order) {
       throw new NotFoundException('Pedido não existe');
+    }
+    if (order.user.id !== userId) {
+      throw new UnauthorizedException('Usuário não autenticado');
     }
     order.status = updateOrderDto.orderStatus;
     await this.orderRepository.save(order);

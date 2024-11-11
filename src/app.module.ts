@@ -1,9 +1,9 @@
 // src/app.module.ts
 
 import { CacheModule } from '@nestjs/cache-manager';
-import { Module } from '@nestjs/common';
+import { ClassSerializerInterceptor, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { APP_FILTER } from '@nestjs/core';
+import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import * as cacheManager from 'cache-manager';
 import * as memcachedStore from 'cache-manager-memcached-store';
@@ -41,6 +41,10 @@ import UserModule from './modules/users/user.module';
     {
       provide: APP_FILTER,
       useClass: HttpExceptionHandler,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: ClassSerializerInterceptor,
     },
   ],
 })

@@ -1,3 +1,4 @@
+import { Exclude } from 'class-transformer';
 import OrderEntity from '../../orders/entities/order.entity';
 
 import {
@@ -24,6 +25,7 @@ class UserEntity extends BaseEntity {
   @Column({ name: 'EMAIL', nullable: false })
   email: string;
 
+  @Exclude()
   @Column({ name: 'PASSWORD', nullable: false })
   password: string;
 
