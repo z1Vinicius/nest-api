@@ -32,10 +32,10 @@ import UserModule from './modules/users/user.module';
         }),
     }),
     AdminModule, // Import AdminModule here
+    AuthModule,
     UserModule,
     ProductsModule,
     OrdersModule,
-    AuthModule,
   ],
   providers: [
     {

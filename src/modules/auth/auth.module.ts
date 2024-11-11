@@ -15,6 +15,7 @@ import { AuthService } from './auth.service';
   ],
   imports: [
     UserModule,
+    ConfigModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
@@ -25,5 +26,6 @@ import { AuthService } from './auth.service';
       inject: [ConfigService],
     }),
   ],
+  exports: [JwtModule],
 })
 export class AuthModule {}
