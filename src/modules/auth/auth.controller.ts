@@ -7,9 +7,10 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('login')
-  signIn(@Body() auth: AuthDTO) {
+  async signIn(@Body() auth: AuthDTO) {
     const { email, password } = auth;
 
-    return this.authService.signIn(email, password);
+    const token = await this.authService.signIn(email, password);
+    return token;
   }
 }

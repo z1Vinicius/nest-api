@@ -21,6 +21,11 @@ class UserService {
     return await this.userRepository.findOne({ where: { email: email } });
   }
 
+  async updateLastSignIn(user: UserEntity) {
+    user.lastSignIn = new Date();
+    await this.userRepository.save(user);
+  }
+
   async listUsers(): Promise<ListUserDTO[]> {
     const userQuery = await this.userRepository.find();
     const users: ListUserDTO[] = userQuery.map((user) => new ListUserDTO(user.id, user.name, user.email));

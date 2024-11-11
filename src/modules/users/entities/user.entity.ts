@@ -38,6 +38,9 @@ class UserEntity extends BaseEntity {
   @CreateDateColumn({ name: 'CREATED_AT' })
   createAt: Date;
 
+  @Column({ type: 'timestamp', nullable: true, name: 'LAST_SIGN_IN' })
+  lastSignIn: Date;
+
   @UpdateDateColumn({ name: 'UPDATED_AT' })
   updatedAt: Date;
 

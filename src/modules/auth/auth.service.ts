@@ -21,6 +21,7 @@ export class AuthService {
       throw new UnauthorizedException('A senha informada está incorreta');
     }
     const payload: IAuthPayload = { sub: user.id, email: user.email };
+    await this.userRepository.updateLastSignIn(user);
     return { accessToken: await this.jwtService.signAsync(payload) };
   }
 }
