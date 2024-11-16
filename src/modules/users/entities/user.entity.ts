@@ -8,14 +8,14 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  ObjectIdColumn,
   OneToMany,
-  PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
 @Entity({ name: 'TB_USERS', schema: process.env.DATABASE_SCHEMA })
 class UserEntity extends BaseEntity {
-  @PrimaryGeneratedColumn('uuid', { name: 'CD_USER' })
+  @ObjectIdColumn()
   id!: string;
 
   @Column({ name: 'DE_USER', length: 50, nullable: false })

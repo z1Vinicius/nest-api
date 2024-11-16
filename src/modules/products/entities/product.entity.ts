@@ -5,6 +5,7 @@ import {
   DeleteDateColumn,
   Entity,
   ManyToOne,
+  ObjectIdColumn,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -16,7 +17,7 @@ import ProductImageEntity from './product-images.entity';
 
 @Entity({ name: 'TB_PRODUCTS', schema: process.env.DATABASE_SCHEMA })
 class ProductEntity extends BaseEntity {
-  @PrimaryGeneratedColumn('uuid', { name: 'CD_PRODUCT' })
+  @ObjectIdColumn()
   id!: string;
 
   @Column({ name: 'NAME', nullable: false })

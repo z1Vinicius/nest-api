@@ -16,7 +16,7 @@ class UserController {
   }
 
   @Post()
-  async createUser(@Body() userData: CreateUserDTO, @Body('password', HashPasswordPipe) password: string) {
+  async createUser(@Body() userData: CreateUserDTO, @Body('password') password: string) {
     const createUser = await this.userService.createUser({ ...userData, password: password });
     return new ListUserDTO(createUser.id, createUser.name, createUser.email);
   }

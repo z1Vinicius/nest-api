@@ -12,11 +12,12 @@ import { OrdersModule } from './modules/orders/orders.module';
 import ProductsModule from './modules/products/products.module';
 import UserModule from './modules/users/user.module';
 import { PostgresConfigService } from './infra/db/settings/postgres.config.service';
+import { MongoDBConfigService } from './infra/db/settings/mongo.config.service';
 const cacheManager = require('cache-manager');
 
 @Module({
   imports: [
-    TypeOrmModule.forRootAsync({ useClass: PostgresConfigService, inject: [PostgresConfigService] }),
+    TypeOrmModule.forRootAsync({ useClass: MongoDBConfigService, inject: [MongoDBConfigService] }),
     ConfigModule.forRoot({ isGlobal: true }),
     CacheModule.registerAsync({
       isGlobal: true,

@@ -50,6 +50,7 @@
     "express-formidable": "^1.2.0",
     "memcache-pp": "^0.3.3",
     "memcached": "^2.2.2",
+    "mongodb": "^5.9.2",
     "nestjs-admin": "^0.4.1",
     "oracledb": "^6.6.0",
     "pg": "^8.13.1",

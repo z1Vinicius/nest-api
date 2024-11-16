@@ -1,9 +1,9 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn, BaseEntity } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn, BaseEntity, ObjectIdColumn } from 'typeorm';
 import ProductEntity from './product.entity';
 
 @Entity({ name: 'TB_PRODUCT_DETAILS', schema: process.env.DATABASE_SCHEMA })
 class ProductDetailEntity extends BaseEntity  {
-  @PrimaryGeneratedColumn('increment', { name: 'CD_PRODUCT_DETAIL' })
+  @ObjectIdColumn()
   id!: number;
 
   @Column({ name: 'NAME', nullable: false })

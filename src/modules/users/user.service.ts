@@ -30,6 +30,8 @@ class UserService {
   async createUser(userData: CreateUserDTO): Promise<UserEntity> {
     const user = new UserEntity();
     Object.assign(user, userData as UserEntity);
+    console.table(user)
+    console.log(this.userRepository)
     await this.userRepository.save(user);
     return user;
   }
