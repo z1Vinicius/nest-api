@@ -13,6 +13,7 @@ import ProductsModule from './modules/products/products.module';
 import UserModule from './modules/users/user.module';
 import { PostgresConfigService } from './infra/db/settings/postgres.config.service';
 import { MongoDBConfigService } from './infra/db/settings/mongo.config.service';
+import RecipeModule from './modules/recipe/recipe.module';
 const cacheManager = require('cache-manager');
 
 @Module({
@@ -34,6 +35,7 @@ const cacheManager = require('cache-manager');
     UserModule,
     ProductsModule,
     OrdersModule,
+    RecipeModule,
     AuthModule,
   ],
   providers: [
