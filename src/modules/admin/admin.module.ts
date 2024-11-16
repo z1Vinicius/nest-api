@@ -5,6 +5,11 @@ import { getRepositoryToken, TypeOrmModule } from '@nestjs/typeorm';
 import { validate } from 'class-validator';
 import { Repository } from 'typeorm';
 import UserEntity from '../users/entities/user.entity';
+import ProductEntity from '../products/entities/product.entity';
+import ProductCategoryEntity from '../products/entities/product-category.entity';
+import ProductDetailEntity from '../products/entities/product-details.entity';
+import OrderEntity from '../orders/entities/order.entity';
+import OrderItemEntity from '../orders/entities/order-item.entity';
 
 interface CurrentAdmin {
   email: string;
@@ -47,15 +52,15 @@ const authenticate = {
         useFactory: async (userRepository: Repository<UserEntity>) => ({
           adminJsOptions: {
             rootPath: '/admin',
-            resources: [UserEntity],
+            resources: [UserEntity, ProductEntity, ProductCategoryEntity, ProductDetailEntity, OrderEntity, OrderItemEntity],
           },
-          //   auth: {
-          //     authenticate: ,
-          //     cookieName: 'adminjs',
-          //     cookiePassword: 'secret',
-          //   },
+            // auth: {
+            //   authenticate: authenticate.useFactory(),
+            //   cookieName: 'adminjs',
+            //   cookiePassword: 'secret',
+            // },
         }),
-        inject: [TypeOrmModule.forFeature([UserEntity])],
+        inject: [],
       });
     })(),
   ],

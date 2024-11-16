@@ -23,7 +23,7 @@ export class ProductsController {
   @Get(':id')
   async findOne(@Param('id') id: string) {
     const cacheKey = `product-find-${id}`;
-    const cache = await this.cacheManager.get<ProductEntity>(cacheKey);
+    const cache = await this.cacheManager.get(cacheKey);
     if (cache) return cache;
     const product = await this.productRepository.findProduct(id);
     await this.cacheManager.set(cacheKey, product, 5);
