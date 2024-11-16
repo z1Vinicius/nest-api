@@ -22,37 +22,40 @@ class RecipeEntity extends BaseEntity {
   @ObjectIdColumn()
   id!: string;
 
-  @Column({ name: 'title', nullable: false })
+  @Column({  nullable: false })
   title: string;
 
-  @Column({ name: 'PREPARATION_TIME', default: 0 })
+  @Column({ default: 0  })
   preparationTime: number;
+  
+  @Column({ default: 0 })
+  servingSize: number;
 
-  @Column({ name: 'RECIPE_DE' })
+  @Column()
   description: string;
 
-  @Column({ name: 'STATUS', enum: RecipeStatus, default: RecipeStatus.Public })
+  @Column({enum: RecipeStatus, default: RecipeStatus.Public })
   status: RecipeStatus;
 
-  @ManyToOne(() => RecipeCategoryEntity, { nullable: true, eager: true, cascade: true })
+  @Column((type) => RecipeCategoryEntity)
   category: RecipeCategoryEntity;
 
-  @OneToMany(() => RecipeImageEntity, (recipe) => recipe.recipe, { nullable: true, eager: true, cascade: true })
+  @Column((type) => RecipeImageEntity)
   images: RecipeImageEntity[];
 
-  @OneToMany(() => RecipeInstructionsEntity, (recipe) => recipe.recipe, { nullable: true, eager: true, cascade: true })
+  @Column((type) => RecipeInstructionsEntity)
   instructions: RecipeInstructionsEntity[];
   
-  @OneToMany(() => RecipeIngredientsEntity, (recipe) => recipe.recipe, { nullable: true, eager: true, cascade: true })
+  @Column((type) => RecipeIngredientsEntity)
   ingredients: RecipeIngredientsEntity[];
 
-  @CreateDateColumn({ name: 'CREATED_AT' })
+  @CreateDateColumn()
   createAt!: Date;
 
-  @UpdateDateColumn({ name: 'UPDATED_AT' })
+  @UpdateDateColumn()
   updatedAt!: Date;
 
-  @DeleteDateColumn({ name: 'DELETED_AT' })
+  @DeleteDateColumn()
   deletedAt!: Date;
 }
 

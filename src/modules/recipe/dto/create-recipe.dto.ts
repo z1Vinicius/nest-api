@@ -74,6 +74,10 @@ export class CreateRecipeDto {
   @IsNotEmpty()
   preparationTime: number;
   
+  @IsNumber()
+  @IsNotEmpty()
+  servingSize: number;
+  
   @IsString()
   @IsNotEmpty()
   description: string;

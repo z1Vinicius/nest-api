@@ -1,18 +1,17 @@
 import { BaseEntity, Column, Entity, ManyToOne, ObjectIdColumn, PrimaryGeneratedColumn } from 'typeorm';
 import RecipeEntity from './recipe.entity';
 
-@Entity({ name: 'TB_RECIPE_INGREDIENTS', schema: process.env.DATABASE_SCHEMA })
 class RecipeIngredientsEntity extends BaseEntity {
   @ObjectIdColumn()
   id!: number;
 
-  @Column({ name: 'NAME', nullable: false })
+  @Column({  nullable: false })
   name: string;
 
-  @Column({ name: 'UNIT' })
+  @Column()
   unit: string;
   
-  @Column({ name: 'COUNT' })
+  @Column()
   count: number;
 
   @ManyToOne(() => RecipeEntity, (recipe) => recipe.images, {

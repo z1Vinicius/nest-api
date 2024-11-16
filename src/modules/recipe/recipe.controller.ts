@@ -13,12 +13,12 @@ export class RecipeController {
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
   ) {}
 
-  // @Get()
+  @Get()
   // @UseInterceptors(CacheInterceptor)
   // @CacheTTL(5)
-  // async findAll() {
-  //   return await this.RecipeRepository.listRecipes();
-  // }
+  async findAll() {
+    return await this.RecipeRepository.listRecipes();
+  }
 
   // @Get(':id')
   // async findOne(@Param('id') id: string) {

@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateRecipeDto } from './dto/create-recipe.dto';
-import { ListProductsDTO } from './dto/list-products.dto';
+import { ListRecipesDTO } from './dto/list-recipes.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import ProductEntity from './entities/recipe.entity';
 import { CreateProductDto } from '../products/dto/create-product.dto';
@@ -12,26 +12,28 @@ import RecipeEntity from './entities/recipe.entity';
 class ProductService {
   constructor(
     @InjectRepository(ProductEntity)
-    private readonly productRepository: Repository<ProductEntity>,
+    private readonly recipeRepository: Repository<ProductEntity>,
   ) {}
 
-  // async listProducts(): Promise<ListProductsDTO[]> {
-  //   const productsQuery = await this.productRepository.find();
-  //   const products = productsQuery.map((product) => {
-  //     return new ListProductsDTO(
-  //       product.id,
-  //       product.name,
-  //       product.description,
-  //       product.price,
-  //       product.available,
-  //       product.active,
-  //       product.category,
-  //       product.images,
-  //       product.details,
-  //     );
-  //   });
-  //   return products;
-  // }
+  async listRecipes(): Promise<ListRecipesDTO[]> {
+    const recipeQuery = await this.recipeRepository.find();
+    
+    const recipes = recipeQuery.map((recipe) => {
+      return new ListRecipesDTO(
+        recipe.id,
+        recipe.title,
+        recipe.description,
+        recipe.status,
+        recipe.servingSize,
+        recipe.preparationTime,
+        recipe.category,
+        recipe.images,
+        recipe.ingredients,
+        recipe.instructions,
+      );
+    });
+    return recipes;
+  }
 
   // async findProduct(id: string): Promise<ListProductsDTO> {
   //   return this.productRepository.findOneByOrFail({ id: id });
@@ -41,7 +43,7 @@ class ProductService {
     const recipe = new RecipeEntity();
     Object.assign(recipe, recipeData as RecipeEntity);
 
-    return await this.productRepository.save(recipe);
+    return await this.recipeRepository.save(recipe);
   }
 
   // async updateProduct(productId: string, productData: UpdateProductDto) {
