@@ -7,6 +7,7 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import ProductEntity from './entities/recipe.entity';
 import { CreateProductDto } from '../products/dto/create-product.dto';
 import RecipeEntity from './entities/recipe.entity';
+import { ObjectId } from 'mongodb';
 
 @Injectable()
 class ProductService {
@@ -20,7 +21,6 @@ class ProductService {
     
     const recipes = recipeQuery.map((recipe) => {
       return new ListRecipesDTO(
-        recipe.id,
         recipe.title,
         recipe.description,
         recipe.status,
@@ -30,14 +30,15 @@ class ProductService {
         recipe.images,
         recipe.ingredients,
         recipe.instructions,
+        recipe._id,
       );
     });
     return recipes;
   }
 
-  // async findProduct(id: string): Promise<ListProductsDTO> {
-  //   return this.productRepository.findOneByOrFail({ id: id });
-  // }
+  async findRecipe(id: string): Promise<ListRecipesDTO> {
+    return await this.recipeRepository.findOneByOrFail( { _id: new ObjectId(id) } )
+  }
 
   async createRecipe(recipeData: CreateRecipeDto) {
     const recipe = new RecipeEntity();

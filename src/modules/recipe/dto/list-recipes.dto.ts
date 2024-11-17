@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { ObjectId } from 'typeorm';
 
 @Injectable()
 class RecipeInstruction{
@@ -31,7 +32,6 @@ class RecipeIngredients {
 Injectable();
 class ListRecipesDTO {
   constructor(
-    readonly id: string,
     readonly title: string,
     readonly description: string,
     readonly status: string,
@@ -41,6 +41,7 @@ class ListRecipesDTO {
     readonly images: RecipeImage[],
     readonly ingredients: RecipeIngredients[],
     readonly instructions: RecipeInstruction[],
+    readonly id?: ObjectId,
   ) {}
 }
 

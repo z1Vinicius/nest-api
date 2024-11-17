@@ -16,11 +16,12 @@ import RecipeInstructionsEntity from './recipe-instructions.entity';
 import RecipeImageEntity from './recipe-images.entity';
 import { RecipeStatus } from '../enum/RECIPE.status.enum';
 import RecipeIngredientsEntity from './recipe-ingredients.entity';
+import { ObjectId } from 'mongodb';
 
 @Entity({ name: 'TB_RECIPES', schema: process.env.DATABASE_SCHEMA })
 class RecipeEntity extends BaseEntity {
   @ObjectIdColumn()
-  id!: string;
+  _id!: ObjectId;
 
   @Column({  nullable: false })
   title: string;

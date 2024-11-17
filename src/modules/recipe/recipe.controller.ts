@@ -20,15 +20,15 @@ export class RecipeController {
     return await this.RecipeRepository.listRecipes();
   }
 
-  // @Get(':id')
-  // async findOne(@Param('id') id: string) {
-  //   const cacheKey = `Recipe-find-${id}`;
-  //   const cache = await this.cacheManager.get(cacheKey);
-  //   if (cache) return cache;
-  //   const Recipe = await this.RecipeRepository.findRecipe(id);
-  //   await this.cacheManager.set(cacheKey, Recipe, 5);
-  //   return Recipe;
-  // }
+  @Get(':id')
+  async findOne(@Param('id') id: string) {
+    const cacheKey = `Recipe-find-${id}`;
+    const cache = await this.cacheManager.get(cacheKey);
+    if (cache) return cache;
+    const Recipe = await this.RecipeRepository.findRecipe(id);
+    await this.cacheManager.set(cacheKey, Recipe, 5);
+    return Recipe;
+  }
 
   @Post()
   async createRecipe(@Body() RecipeData: CreateRecipeDto) {
