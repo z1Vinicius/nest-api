@@ -3,6 +3,7 @@ import { Type } from 'class-transformer';
 import { IsNotEmpty, IsNumber, IsOptional, IsString, ValidateNested } from 'class-validator';
 import RecipeEntity from '../entities/recipe.entity';
 import { RecipeStatus } from '../enum/RECIPE.status.enum';
+import { ObjectId } from 'typeorm';
 
 export class RecipeInstructionsDTO {
   @IsNumber()
@@ -33,9 +34,9 @@ export class RecipeImageDTO {
 }
 
 export class RecipeCategoryDTO {
-  @IsNumber()
+  @IsString()
   @IsOptional()
-  id!: number;
+  _id!: ObjectId;
 
   @IsString()
   @IsNotEmpty()
@@ -78,6 +79,10 @@ export class CreateRecipeDto {
   @IsNotEmpty()
   servingSize: number;
   
+  @IsNumber()
+  @IsNotEmpty()
+  calories: number;
+  
   @IsString()
   @IsNotEmpty()
   description: string;
@@ -89,7 +94,7 @@ export class CreateRecipeDto {
   @IsOptional()
   @ValidateNested({ each: true })
   @Type(() => RecipeCategoryDTO)
-  category: RecipeCategoryDTO;
+  categories: RecipeCategoryDTO[];
 
   @IsOptional()
   @ValidateNested({ each: true })

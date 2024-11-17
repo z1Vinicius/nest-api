@@ -31,6 +31,9 @@ class RecipeEntity extends BaseEntity {
   
   @Column({ default: 0 })
   servingSize: number;
+  
+  @Column({ default: 0 })
+  calories: number;
 
   @Column()
   description: string;
@@ -38,8 +41,8 @@ class RecipeEntity extends BaseEntity {
   @Column({enum: RecipeStatus, default: RecipeStatus.Public })
   status: RecipeStatus;
 
-  @Column((type) => RecipeCategoryEntity)
-  category: RecipeCategoryEntity;
+  @Column((type)=> RecipeCategoryEntity)
+  categories: RecipeCategoryEntity[];
 
   @Column((type) => RecipeImageEntity)
   images: RecipeImageEntity[];

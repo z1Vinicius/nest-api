@@ -4,7 +4,6 @@ import { Repository } from 'typeorm';
 import { CreateRecipeDto } from './dto/create-recipe.dto';
 import { ListRecipesDTO } from './dto/list-recipes.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-import ProductEntity from './entities/recipe.entity';
 import { CreateProductDto } from '../products/dto/create-product.dto';
 import RecipeEntity from './entities/recipe.entity';
 import { ObjectId } from 'mongodb';
@@ -12,21 +11,21 @@ import { ObjectId } from 'mongodb';
 @Injectable()
 class ProductService {
   constructor(
-    @InjectRepository(ProductEntity)
-    private readonly recipeRepository: Repository<ProductEntity>,
+    @InjectRepository(RecipeEntity)
+    private readonly recipeRepository: Repository<RecipeEntity>,
   ) {}
 
   async listRecipes(): Promise<ListRecipesDTO[]> {
     const recipeQuery = await this.recipeRepository.find();
-    
     const recipes = recipeQuery.map((recipe) => {
       return new ListRecipesDTO(
         recipe.title,
         recipe.description,
         recipe.status,
+        recipe.calories,
+        recipe.categories,
         recipe.servingSize,
         recipe.preparationTime,
-        recipe.category,
         recipe.images,
         recipe.ingredients,
         recipe.instructions,

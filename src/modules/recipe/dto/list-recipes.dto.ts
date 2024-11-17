@@ -16,7 +16,7 @@ class RecipeImage {
 
 @Injectable()
 class RecipeCategory {
-  readonly id: number;
+  readonly _id: ObjectId;
   readonly name: string;
   readonly description: string;
 }
@@ -35,9 +35,10 @@ class ListRecipesDTO {
     readonly title: string,
     readonly description: string,
     readonly status: string,
+    readonly calories: number,
+    readonly categories: RecipeCategory[],
     readonly servingSize: number,
     readonly preparationTime: number,
-    readonly category: RecipeCategory,
     readonly images: RecipeImage[],
     readonly ingredients: RecipeIngredients[],
     readonly instructions: RecipeInstruction[],
